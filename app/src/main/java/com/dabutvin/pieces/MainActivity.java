@@ -1,15 +1,22 @@
 package com.dabutvin.pieces;
 
+import android.app.AlertDialog;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.GestureDetector;
+import android.view.GestureDetector.SimpleOnGestureListener;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ImageView;
 
 public class MainActivity extends AppCompatActivity {
+
+    ImageView mainImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +25,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        mainImageView = (ImageView)findViewById(R.id.mainimage);
+
     }
 
     @Override
@@ -48,5 +49,19 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void upvote(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("UPVOTTING")
+                .setMessage("You just got upvotteed")
+                .show();
+    }
+
+    public void downvote(View view) {
+        new AlertDialog.Builder(this)
+                .setTitle("Downvottting")
+                .setMessage("You just got downvotteed")
+                .show();
     }
 }
