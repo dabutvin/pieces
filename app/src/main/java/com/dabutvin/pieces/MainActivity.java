@@ -82,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
                 PieceModel newPiece = new PieceModel();
                 newPiece.setArtist("the dev");
                 newPiece.setMedium("java on pc");
-                newPiece.setSrc("http://lorempixel.com/250/250/");
+                newPiece.setSrc("http://lorempixel.com/251/251/");
                 newPiece.setTitle("Debug infinity");
                 pieces.add(newPiece);
 

@@ -16,10 +16,10 @@ router.get('/api/data', function(req, res, next) {
 				src: "http://lorempixel.com/250/250/"
 			},
 			{
-				title: "title uno",
-				artist: "artist uno",
-				medium: "medium uno",
-				src: "http://lorempixel.com/250/250/"
+				title: "title dos",
+				artist: "artist dos",
+				medium: "medium dos",
+				src: "http://lorempixel.com/249/249/"
 			}
 		] 
 	});
