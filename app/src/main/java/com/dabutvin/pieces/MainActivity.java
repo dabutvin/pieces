@@ -52,6 +52,7 @@ public class MainActivity extends AppCompatActivity {
         }).execute("http://pieces.azurewebsites.net/api/data/");
 
         pieces = new ArrayList<>();
+
         pieceAdapter = new PieceAdapter(this, pieces);
         swipeFlingAdapterView.setAdapter(pieceAdapter);
         swipeFlingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -105,6 +106,14 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+
+        PieceModel newPiece = new PieceModel();
+        newPiece.setArtist("the dev");
+        newPiece.setMedium("java on pc");
+        newPiece.setSrc("http://lorempixel.com/248/248/");
+        newPiece.setTitle("Initial piece");
+        pieces.add(newPiece);
+        pieceAdapter.notifyDataSetChanged();
     }
 
     @Override

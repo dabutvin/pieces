@@ -44,12 +44,12 @@ public class DeserializePiecesTask extends AsyncTask<String, Void, List<PieceMod
             e.printStackTrace();
         }
 
-        Log.d("doinback", "HERE I  " + pieces.size());
         return pieces;
     }
 
     @Override
     protected void onPostExecute(List<PieceModel> result) {
+        Log.d("Deserializer", "Deserialized " + result.size() + " pieces");
         callback.onTaskFinished(result);
     }
 }
