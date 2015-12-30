@@ -59,6 +59,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void removeFirstObjectInAdapter() {
+                // called on every swipe left or right first then the appropriate method below
                 Log.d("LIST", "removed object!");
                 pieces.remove(0);
                 pieceAdapter.notifyDataSetChanged();
@@ -66,25 +67,28 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onLeftCardExit(Object o) {
-
+                Log.d("SWIPE", "You just swiped left!");
             }
 
             @Override
             public void onRightCardExit(Object o) {
-
+                Log.d("SWIPE", "You just swiped right!");
             }
 
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
+                Log.d("ListAboutEmpty", "Only" + itemsInAdapter + " left");
                 // fetch more pieces
+
                 PieceModel newPiece = new PieceModel();
                 newPiece.setArtist("Last call");
                 newPiece.setMedium("nothing left");
                 newPiece.setSrc("tbd");
                 newPiece.setTitle("Painting fin");
                 pieces.add(newPiece);
+
                 pieceAdapter.notifyDataSetChanged();
-                Log.d("LIST", "notified");
+
                 itemsInAdapter++;
             }
 
@@ -100,10 +104,7 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClicked(int i, Object o) {
-                new AlertDialog.Builder(getApplicationContext())
-                        .setTitle("Show me details")
-                        .setMessage("You just got details")
-                        .show();
+
             }
         });
     }
