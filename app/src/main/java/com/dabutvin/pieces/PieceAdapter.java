@@ -10,6 +10,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import org.w3c.dom.Text;
 
 import java.util.List;
@@ -55,7 +57,7 @@ public class PieceAdapter extends BaseAdapter{
         titleTextView.setText(piece.getTitle());
         mediumTextView.setText(", " + piece.getMedium());
         artistTextView.setText(piece.getArtist());
-        imageView.setImageResource(R.drawable.painting);
+        Picasso.with(context).load(piece.getSrc()).into(imageView);
 
         return convertView;
     }
