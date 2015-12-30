@@ -14,15 +14,17 @@
     <com.lorentzos.flingswipe.SwipeFlingAdapterView
         android:id="@+id/swipeflinger"
         app:rotation_degrees="16"
-        app:max_visible="4"
+        app:max_visible="3"
         app:min_adapter_stack="6"
+        android:layout_weight="3"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" />
+        android:layout_height="0dp" />
 
     <LinearLayout
         android:orientation="horizontal"
+        android:layout_weight="1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="0dp">
 
         <Button
             android:layout_weight="1"
