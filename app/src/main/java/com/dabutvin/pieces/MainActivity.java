@@ -79,16 +79,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("ListAboutEmpty", "Only" + itemsInAdapter + " left");
                 // fetch more pieces
 
-//                PieceModel newPiece = new PieceModel();
-//                newPiece.setArtist("Last call");
-//                newPiece.setMedium("nothing left");
-//                newPiece.setSrc("tbd");
-//                newPiece.setTitle("Painting fin");
-//                pieces.add(newPiece);
-//
-//                pieceAdapter.notifyDataSetChanged();
-//
-//                itemsInAdapter++;
+                PieceModel newPiece = new PieceModel();
+                newPiece.setArtist("the dev");
+                newPiece.setMedium("java on pc");
+                newPiece.setSrc("http://lorempixel.com/250/250/");
+                newPiece.setTitle("Debug infinity");
+                pieces.add(newPiece);
+
+                pieceAdapter.notifyDataSetChanged();
+
+                itemsInAdapter++;
             }
 
             @Override
