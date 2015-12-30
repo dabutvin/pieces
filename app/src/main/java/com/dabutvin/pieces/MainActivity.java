@@ -36,23 +36,22 @@ public class MainActivity extends AppCompatActivity {
 
         swipeFlingAdapterView = (SwipeFlingAdapterView)findViewById(R.id.swipeflinger);
 
+        new DownloadJsonTask(new StringCallbackInterface() {
+            @Override
+            public void onTaskFinished(String json) {
+                new DeserializePiecesTask(new PiecesCallbackInterface() {
+                    @Override
+                    public void onTaskFinished(List<PieceModel> result) {
+                        for(int i =0; i<result.size();i++) {
+                            pieces.add(result.get(i));
+                            pieceAdapter.notifyDataSetChanged();
+                        }
+                    }
+                }).execute(json);
+            }
+        }).execute("http://pieces.azurewebsites.net/api/data/");
+
         pieces = new ArrayList<>();
-        PieceModel pieceModel1 = new PieceModel();
-        pieceModel1.setArtist("Dan Butvinik");
-        pieceModel1.setMedium("Oil on canvas");
-        pieceModel1.setSrc("tbd");
-        pieceModel1.setTitle("Painting uno");
-
-        pieces.add(pieceModel1);
-
-        PieceModel pieceMode2 = new PieceModel();
-        pieceMode2.setArtist("John Fogerty");
-        pieceMode2.setMedium("Rice and beans");
-        pieceMode2.setSrc("tbd");
-        pieceMode2.setTitle("Painting dos");
-
-        pieces.add(pieceMode2);
-
         pieceAdapter = new PieceAdapter(this, pieces);
         swipeFlingAdapterView.setAdapter(pieceAdapter);
         swipeFlingAdapterView.setFlingListener(new SwipeFlingAdapterView.onFlingListener() {
@@ -80,16 +79,16 @@ public class MainActivity extends AppCompatActivity {
                 Log.d("ListAboutEmpty", "Only" + itemsInAdapter + " left");
                 // fetch more pieces
 
-                PieceModel newPiece = new PieceModel();
-                newPiece.setArtist("Last call");
-                newPiece.setMedium("nothing left");
-                newPiece.setSrc("tbd");
-                newPiece.setTitle("Painting fin");
-                pieces.add(newPiece);
-
-                pieceAdapter.notifyDataSetChanged();
-
-                itemsInAdapter++;
+//                PieceModel newPiece = new PieceModel();
+//                newPiece.setArtist("Last call");
+//                newPiece.setMedium("nothing left");
+//                newPiece.setSrc("tbd");
+//                newPiece.setTitle("Painting fin");
+//                pieces.add(newPiece);
+//
+//                pieceAdapter.notifyDataSetChanged();
+//
+//                itemsInAdapter++;
             }
 
             @Override
@@ -99,8 +98,7 @@ public class MainActivity extends AppCompatActivity {
                 selectedView.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
         });
-
-        swipeFlingAdapterView.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener(){
+        swipeFlingAdapterView.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
 
             @Override
             public void onItemClicked(int i, Object o) {
