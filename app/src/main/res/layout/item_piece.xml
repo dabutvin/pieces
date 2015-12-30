@@ -49,19 +49,20 @@
 
     </LinearLayout>
 
-    <View
+    <ImageView
+        android:src="@drawable/like_stamp"
         android:id="@+id/item_swipe_right_indicator"
         android:alpha="0"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentLeft="true"
-        android:background="#5AF" />
-    <View
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentLeft="true" />
+
+    <ImageView
+        android:src="@drawable/dislike_stamp"
         android:id="@+id/item_swipe_left_indicator"
         android:alpha="0"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
-        android:layout_alignParentRight="true"
-        android:background="#A5F" />
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_alignParentRight="true" />
 
 </RelativeLayout>
