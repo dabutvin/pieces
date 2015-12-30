@@ -6,11 +6,17 @@
     android:orientation="vertical"
     tools:context="com.dabutvin.pieces.PieceDetailActivity">
 
-    <ImageView
-        android:src="@drawable/painting"
-        android:layout_weight="5"
+    <com.daimajia.slider.library.SliderLayout
+        android:id="@+id/slider"
+        android:layout_weight="4"
         android:layout_width="match_parent"
         android:layout_height="0dp" />
+
+    <com.daimajia.slider.library.Indicators.PagerIndicator
+        android:id="@+id/custom_indicator"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center" />
 
     <LinearLayout
         android:padding="5dp"

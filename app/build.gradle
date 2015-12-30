@@ -26,4 +26,6 @@ dependencies {
     compile 'com.android.support:design:23.1.1'
     compile 'com.lorentzos.swipecards:library:1.0.8@aar'  // https://github.com/Diolor/Swipecards
     compile 'com.squareup.picasso:picasso:2.5.2' // https://github.com/square/picasso
+    compile 'com.nineoldandroids:library:2.4.0'
+    compile 'com.daimajia.slider:library:1.1.5@aar' // https://github.com/daimajia/AndroidImageSlider
 }
