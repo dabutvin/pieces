@@ -131,10 +131,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void upvote(View view) {
+        View selectedView = swipeFlingAdapterView.getSelectedView();
+        selectedView.findViewById(R.id.item_swipe_right_indicator).setAlpha(1);
         swipeFlingAdapterView.getTopCardListener().selectRight();
     }
 
     public void downvote(View view) {
+        View selectedView = swipeFlingAdapterView.getSelectedView();
+        selectedView.findViewById(R.id.item_swipe_left_indicator).setAlpha(1);
         swipeFlingAdapterView.getTopCardListener().selectLeft();
     }
 }
