@@ -1,6 +1,7 @@
 package com.dabutvin.pieces;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -103,7 +104,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onItemClicked(int i, Object o) {
-
+                Intent intent = new Intent(getApplicationContext(), PieceDetailActivity.class);
+                startActivity(intent);
             }
         });
 
