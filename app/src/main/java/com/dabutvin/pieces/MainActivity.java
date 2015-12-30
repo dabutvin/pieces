@@ -89,8 +89,10 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onScroll(float v) {
-
+            public void onScroll(float scrollProgressPercent) {
+                View selectedView = swipeFlingAdapterView.getSelectedView();
+                selectedView.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                selectedView.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
             }
         });
 
