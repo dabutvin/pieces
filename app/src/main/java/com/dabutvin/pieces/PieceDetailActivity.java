@@ -1,64 +1,87 @@
 package com.dabutvin.pieces;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.widget.TextView;
 
-import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
-import java.util.ArrayList;
+import org.w3c.dom.Text;
+
 import java.util.List;
 
-public class PieceDetailActivity extends AppCompatActivity implements BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
+public class PieceDetailActivity extends AppCompatActivity implements ViewPagerEx.OnPageChangeListener {
 
     SliderLayout slider;
-    List<PieceModel> pieces;
+    TextView title;
+    TextView medium;
+    TextView artist;
+    TextView description;
+    int selectedId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_piece_detail);
 
-        slider = (SliderLayout) findViewById(R.id.slider);
-        pieces = new ArrayList<>();
-
-        PieceModel newPiece = new PieceModel();
-        newPiece.setArtist("the dev");
-        newPiece.setMedium("java on pc");
-        newPiece.setSrc("http://lorempixel.com/251/251/");
-        newPiece.setTitle("Debug infinity");
-        pieces.add(newPiece);
-
-        PieceModel newPiece1 = new PieceModel();
-        newPiece1.setArtist("the dev1");
-        newPiece1.setMedium("java on p1c");
-        newPiece1.setSrc("http://lorempixel.com/255/255/");
-        newPiece1.setTitle("Debug infinity1");
-        pieces.add(newPiece1);
-
-        for (int i =0; i<pieces.size(); i++) {
-            PieceModel piece = pieces.get(i);
-            TextSliderView textSliderView = new TextSliderView(this);
-            // initialize a SliderLayout
-            textSliderView
-                    .description(piece.getTitle())
-                    .image(piece.getSrc())
-                    .setScaleType(BaseSliderView.ScaleType.Fit)
-                    .setOnSliderClickListener(this);
-
-            //add your extra information
-            textSliderView.bundle(new Bundle());
-            textSliderView.getBundle()
-                    .putString("artist", piece.getArtist());
-            textSliderView.getBundle()
-                    .putString("medium", piece.getMedium());
-
-            slider.addSlider(textSliderView);
+        Bundle extras = getIntent().getExtras();
+        if (extras != null) {
+            selectedId = extras.getInt("SELECTED_ID");
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
         }
+
+        slider = (SliderLayout) findViewById(R.id.slider);
+        title = (TextView) findViewById(R.id.item_title);
+        medium = (TextView) findViewById(R.id.item_medium);
+        artist = (TextView) findViewById(R.id.item_artist);
+        description = (TextView) findViewById(R.id.item_description);
+
+        new DownloadJsonTask(new StringCallbackInterface() {
+            @Override
+            public void onTaskFinished(String json) {
+                new DeserializePieceDetailTask(new PieceDetailCallbackInterface() {
+                    @Override
+                    public void onTaskFinished(PieceDetailModel result) {
+
+                        title.setText(result.getTitle());
+                        medium.setText(result.getMedium());
+                        artist.setText(result.getArtist());
+                        description.setText(result.getDescription());
+
+                        List<String> srcset = result.getSrcset();
+                        for(int i =0; i < srcset.size(); i++) {
+                            TextSliderView textSliderView = new TextSliderView(getApplicationContext());
+                            textSliderView
+                                    .description("This images description")
+                                    .image(srcset.get(i))
+                                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                                    .setOnSliderClickListener(new BaseSliderView.OnSliderClickListener() {
+                                        @Override
+                                        public void onSliderClick(BaseSliderView slider) {
+                                            // This should go back to mainactivity but stay on the current piece
+                                        }
+                                    });
+
+                            //add your extra information
+//                            textSliderView.bundle(new Bundle());
+//                            textSliderView.getBundle()
+//                                    .putString("artist", piece.getArtist());
+//                            textSliderView.getBundle()
+//                                    .putString("medium", piece.getMedium());
+
+                            slider.addSlider(textSliderView);
+                        }
+                    }
+                }).execute(json);
+            }
+        }).execute("http://pieces.azurewebsites.net/api/data/" + selectedId);
+
 
         slider.setPresetTransformer(SliderLayout.Transformer.Accordion);
         slider.setPresetIndicator(SliderLayout.PresetIndicators.Center_Bottom);
@@ -73,10 +96,6 @@ public class PieceDetailActivity extends AppCompatActivity implements BaseSlider
         // To prevent a memory leak on rotation, make sure to call stopAutoCycle() on the slider before activity or fragment is destroyed
         slider.stopAutoCycle();
         super.onStop();
-    }
-
-    @Override
-    public void onSliderClick(BaseSliderView slider) {
     }
 
     @Override

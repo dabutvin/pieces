@@ -105,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int i, Object o) {
                 Intent intent = new Intent(getApplicationContext(), PieceDetailActivity.class);
+                intent.putExtra("SELECTED_ID", ((PieceModel)o).getId());
                 startActivity(intent);
             }
         });

@@ -33,6 +33,7 @@ public class DeserializePiecesTask extends AsyncTask<String, Void, List<PieceMod
                 JSONObject jsonPieceObject = jsonPiecesArray.getJSONObject(i);
                 PieceModel piece = new PieceModel();
 
+                piece.setId(jsonPieceObject.getInt("id"));
                 piece.setTitle(jsonPieceObject.getString("title"));
                 piece.setArtist(jsonPieceObject.getString("artist"));
                 piece.setMedium(jsonPieceObject.getString("medium"));

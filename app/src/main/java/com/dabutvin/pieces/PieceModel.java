@@ -1,6 +1,7 @@
 package com.dabutvin.pieces;
 
 public class PieceModel {
+    private int id;
     private String src;
     private String title;
     private String medium;
@@ -36,5 +37,13 @@ public class PieceModel {
 
     public void setArtist(String artist) {
         this.artist = artist;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 }
