@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     SwipeFlingAdapterView swipeFlingAdapterView;
     List<PieceModel> pieces;
     PieceAdapter pieceAdapter;
+    boolean readyToRefill;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
                         for(int i =0; i<result.size();i++) {
                             pieces.add(result.get(i));
                             pieceAdapter.notifyDataSetChanged();
+                            readyToRefill = true; // dont start to refill pieces  until the first set is filled
                         }
                     }
                 }).execute(json);
@@ -79,25 +81,36 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onAdapterAboutToEmpty(int itemsInAdapter) {
                 Log.d("ListAboutEmpty", "Only" + itemsInAdapter + " left");
-                // fetch more pieces
 
-                PieceModel newPiece = new PieceModel();
-                newPiece.setArtist("the dev");
-                newPiece.setMedium("java on pc");
-                newPiece.setSrc("http://lorempixel.com/251/251/");
-                newPiece.setTitle("Debug infinity");
-                pieces.add(newPiece);
+                if (readyToRefill) {
+                    PieceModel newPiece = new PieceModel();
+                    newPiece.setArtist("the dev");
+                    newPiece.setMedium("java on pc");
+                    newPiece.setSrc("http://lorempixel.com/251/251/");
+                    newPiece.setTitle("Debug infinity");
+                    pieces.add(newPiece);
 
-                pieceAdapter.notifyDataSetChanged();
+                    pieceAdapter.notifyDataSetChanged();
 
-                itemsInAdapter++;
+                    itemsInAdapter++;
+                }
             }
 
             @Override
             public void onScroll(float scrollProgressPercent) {
                 View selectedView = swipeFlingAdapterView.getSelectedView();
-                selectedView.findViewById(R.id.item_swipe_left_indicator).setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
-                selectedView.findViewById(R.id.item_swipe_right_indicator).setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                if (selectedView != null) {
+                    View swipeLeftInidicator = selectedView.findViewById(R.id.item_swipe_left_indicator);
+                    View swipeRightIndicator = selectedView.findViewById(R.id.item_swipe_right_indicator);
+
+                    if (swipeLeftInidicator != null) {
+                        swipeLeftInidicator.setAlpha(scrollProgressPercent < 0 ? -scrollProgressPercent : 0);
+                    }
+
+                    if (swipeRightIndicator != null) {
+                        swipeRightIndicator.setAlpha(scrollProgressPercent > 0 ? scrollProgressPercent : 0);
+                    }
+                }
             }
         });
         swipeFlingAdapterView.setOnItemClickListener(new SwipeFlingAdapterView.OnItemClickListener() {
