@@ -1,0 +1,11 @@
+bin
+obj
+desktop.ini
+TestResults
+packages
+*.user
+*.suo
+*.orig
+.vs
+applicationhost.config
+*.DS_Store
