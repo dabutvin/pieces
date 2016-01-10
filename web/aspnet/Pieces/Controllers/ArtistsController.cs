@@ -1,6 +1,8 @@
 ﻿using Pieces.Data;
 using Pieces.Data.Models;
+using Pieces.Json;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -8,7 +10,7 @@ using System.Web.Mvc;
 namespace Pieces.Controllers
 {
     [RoutePrefix("artists")]
-    public class ArtistsController : Controller
+    public class ArtistsController : BaseController
     {
         private PiecesDbContext dbContext;
 
@@ -23,21 +25,24 @@ namespace Pieces.Controllers
         {
             var artists = await this.dbContext.Artists.ToArrayAsync();
 
-            return Json(artists, JsonRequestBehavior.AllowGet);
+            return Json(artists.Select(x => x.ToShallowArtistJson()), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<JsonResult> Get(int id)
         {
-            var artist = await this.dbContext.Artists.FirstOrDefaultAsync(x => x.ArtistId == id);
+            var artist = await this.dbContext
+                .Artists
+                .Include(x => x.Pieces)
+                .FirstOrDefaultAsync(x => x.ArtistId == id);
 
             if (artist == null)
             {
                 throw new HttpException(404, "Not found.");
             }
 
-            return Json(artist, JsonRequestBehavior.AllowGet);
+            return Json(artist.ToArtistJson(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

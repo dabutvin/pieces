@@ -1,6 +1,8 @@
 ﻿using Pieces.Data;
 using Pieces.Data.Models;
+using Pieces.Json;
 using System.Data.Entity;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -8,7 +10,7 @@ using System.Web.Mvc;
 namespace Pieces.Controllers
 {
     [RoutePrefix("pieces")]
-    public class PiecesController : Controller
+    public class PiecesController : BaseController
     {
         private PiecesDbContext dbContext;
 
@@ -23,27 +25,31 @@ namespace Pieces.Controllers
         {
             var pieces = await this.dbContext.Pieces.ToArrayAsync();
 
-            return Json(pieces, JsonRequestBehavior.AllowGet);
+            return Json(pieces.Select(x => x.ToShallowPieceJson()), JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
         [Route("{id}")]
         public async Task<JsonResult> Get(int id)
         {
-            var piece = await this.dbContext.Pieces.FirstOrDefaultAsync(x => x.PieceId == id);
+            var piece = await this.dbContext
+                .Pieces
+                .Include(x => x.Artist)
+                .FirstOrDefaultAsync(x => x.PieceId == id);
 
             if(piece == null)
             {
                 throw new HttpException(404, "Not found.");
             }
 
-            return Json(piece, JsonRequestBehavior.AllowGet);
+            return Json(piece.ToPieceJson(), JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]
-        [Route("")]
-        public async Task<JsonResult> Post(Piece piece)
+        [Route("{artistId}")]
+        public async Task<JsonResult> Post(int artistId, Piece piece)
         {
+            piece.Artist = await this.dbContext.Artists.FirstOrDefaultAsync(x => x.ArtistId == artistId);
             var posted = this.dbContext.Pieces.Add(piece);
             await this.dbContext.SaveChangesAsync();
 
