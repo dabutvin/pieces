@@ -68,6 +68,8 @@ public class PieceDetailActivity extends AppCompatActivity implements ViewPagerE
                                         @Override
                                         public void onSliderClick(BaseSliderView slider) {
                                             // This should go back to mainactivity but stay on the current piece
+                                            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+                                            startActivity(intent);
                                         }
                                     });
 
