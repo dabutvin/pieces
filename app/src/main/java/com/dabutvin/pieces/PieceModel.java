@@ -1,5 +1,8 @@
 package com.dabutvin.pieces;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class PieceModel {
     private int id;
     private String title;
@@ -72,5 +75,34 @@ public class PieceModel {
 
     public void setUrl(String url) {
         this.url = url;
+    }
+
+    public static PieceModel ToPieceModel(JSONObject jsonObject) {
+        PieceModel piece = new PieceModel();
+
+        try {
+            piece.setId(jsonObject.getInt("id"));
+            piece.setTitle(jsonObject.getString("title"));
+            piece.setMedium(jsonObject.getString("medium"));
+            piece.setDescription(jsonObject.getString("description"));
+            piece.setMainImageUrl(jsonObject.getString("mainImageUrl"));
+            piece.setImageUrl2(jsonObject.getString("imageUrl2"));
+            piece.setUrl(jsonObject.getString("url"));
+
+            if (jsonObject.has("artist")) {
+                JSONObject jsonArtistObject = jsonObject.getJSONObject("artist");
+                ArtistModel artist = new ArtistModel();
+
+                artist.setId(jsonArtistObject.getInt("id"));
+                artist.setUsername(jsonArtistObject.getString("username"));
+                artist.setUrl(jsonArtistObject.getString("url"));
+
+                piece.setArtist(artist);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return piece;
     }
 }
