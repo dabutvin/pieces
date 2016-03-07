@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_weight="8"
+        android:padding="3dp"
+        android:layout_width="match_parent"
+        android:layout_height="0dp">
+
+        <ImageView
+            android:id="@+id/mainImage"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/painting"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/image2"
+            android:layout_weight="2"
+            android:layout_width="0dp"
+            android:layout_margin="5dp"
+            android:src="@drawable/painting"
+            android:layout_height="match_parent" />
+
+    </LinearLayout>
+    <TextView
+        android:text="Title:"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <EditText
+        android:id="@+id/title"
+        android:singleLine="true"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:text="Medium:"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <EditText
+        android:id="@+id/medium"
+        android:singleLine="true"
+        android:layout_weight="2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <TextView
+        android:text="Description:"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    <EditText
+        android:id="@+id/description"
+        android:layout_weight="5"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <Button
+        android:id="@+id/submit"
+        android:layout_width="match_parent"
+        android:text="Submit"
+        android:layout_weight="2"
+        android:layout_height="0dp" />
+</LinearLayout>

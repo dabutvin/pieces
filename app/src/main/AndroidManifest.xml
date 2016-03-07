@@ -24,6 +24,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".PieceDetailActivity"></activity>
+        <activity android:name=".MeActivity"></activity>
+        <activity android:name=".NewPieceActivity"></activity>
     </application>
 
 </manifest>

@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        swipeFlingAdapterView = (SwipeFlingAdapterView)findViewById(R.id.swipeflinger);
+        swipeFlingAdapterView = (SwipeFlingAdapterView) findViewById(R.id.swipeflinger);
 
         new DownloadJsonTask(new StringCallbackInterface() {
             @Override
@@ -36,7 +36,7 @@ public class MainActivity extends AppCompatActivity {
                 new DeserializePiecesTask(new PiecesCallbackInterface() {
                     @Override
                     public void onTaskFinished(List<PieceModel> result) {
-                        for(int i =0; i<result.size();i++) {
+                        for (int i = 0; i < result.size(); i++) {
                             pieces.add(result.get(i));
                             pieceAdapter.notifyDataSetChanged();
                             readyToRefill = true; // dont start to refill pieces  until the first set is filled
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int i, Object o) {
                 Intent intent = new Intent(getApplicationContext(), PieceDetailActivity.class);
-                intent.putExtra("URL", ((PieceModel)o).getUrl());
+                intent.putExtra("URL", ((PieceModel) o).getUrl());
                 startActivity(intent);
             }
         });
@@ -152,8 +152,16 @@ public class MainActivity extends AppCompatActivity {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
+        if (id == R.id.action_me) {
+            Intent intent = new Intent(getApplicationContext(), MeActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(getApplicationContext(), MeActivity.class);
+            startActivity(intent);
             return true;
         }
 
