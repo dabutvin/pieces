@@ -2,7 +2,6 @@ package com.dabutvin.pieces;
 
 import android.app.Activity;
 import android.content.Context;
-import android.media.Image;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,8 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 
@@ -50,14 +47,12 @@ public class PieceAdapter extends BaseAdapter{
         ImageView imageView = (ImageView)convertView.findViewById(R.id.item_image);
         TextView titleTextView = (TextView)convertView.findViewById(R.id.item_title);
         TextView mediumTextView = (TextView)convertView.findViewById(R.id.item_medium);
-        TextView artistTextView = (TextView)convertView.findViewById(R.id.item_artist);
 
         PieceModel piece = pieces.get(position);
 
         titleTextView.setText(piece.getTitle());
         mediumTextView.setText(", " + piece.getMedium());
-        artistTextView.setText(piece.getArtist());
-        Picasso.with(context).load(piece.getSrc()).into(imageView);
+        Picasso.with(context).load(piece.getMainImageUrl()).into(imageView);
 
         return convertView;
     }

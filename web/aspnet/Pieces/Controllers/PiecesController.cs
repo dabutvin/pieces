@@ -25,7 +25,12 @@ namespace Pieces.Controllers
         {
             var pieces = await this.dbContext.Pieces.ToArrayAsync();
 
-            return Json(pieces.Select(x => x.ToShallowPieceJson()), JsonRequestBehavior.AllowGet);
+            return Json(
+                new
+                {
+                    pieces = pieces.Select(x => x.ToShallowPieceJson()),
+                },
+                JsonRequestBehavior.AllowGet);
         }
 
         [HttpGet]
@@ -42,7 +47,12 @@ namespace Pieces.Controllers
                 throw new HttpException(404, "Not found.");
             }
 
-            return Json(piece.ToPieceJson(), JsonRequestBehavior.AllowGet);
+            return Json(
+                new
+                {
+                    piece = piece.ToPieceJson(),
+                },
+                JsonRequestBehavior.AllowGet);
         }
 
         [HttpPost]

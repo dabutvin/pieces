@@ -1,6 +1,7 @@
 package com.dabutvin.pieces;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
@@ -23,6 +24,7 @@ public class DownloadJsonTask extends AsyncTask<String, Void, String> {
         HttpURLConnection urlConnection = null;
         String error = null;
 
+        Log.d("DOWNLOAD", url[0]);
         try {
             urlConnection = (HttpURLConnection) new URL(url[0]).openConnection();
             InputStream inputStream = new BufferedInputStream(urlConnection.getInputStream());

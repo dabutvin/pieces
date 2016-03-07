@@ -11,8 +11,7 @@ import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 
-import org.w3c.dom.Text;
-
+import java.util.ArrayList;
 import java.util.List;
 
 public class PieceDetailActivity extends AppCompatActivity implements ViewPagerEx.OnPageChangeListener {
@@ -22,7 +21,7 @@ public class PieceDetailActivity extends AppCompatActivity implements ViewPagerE
     TextView medium;
     TextView artist;
     TextView description;
-    int selectedId;
+    String selectedUrl;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,7 +30,7 @@ public class PieceDetailActivity extends AppCompatActivity implements ViewPagerE
 
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
-            selectedId = extras.getInt("SELECTED_ID");
+            selectedUrl = extras.getString("URL");
         } else {
             startActivity(new Intent(this, MainActivity.class));
         }
@@ -45,16 +44,20 @@ public class PieceDetailActivity extends AppCompatActivity implements ViewPagerE
         new DownloadJsonTask(new StringCallbackInterface() {
             @Override
             public void onTaskFinished(String json) {
-                new DeserializePieceDetailTask(new PieceDetailCallbackInterface() {
+                new DeserializePieceTask(new PieceCallbackInterface() {
                     @Override
-                    public void onTaskFinished(PieceDetailModel result) {
+                    public void onTaskFinished(PieceModel result) {
 
                         title.setText(result.getTitle());
                         medium.setText(result.getMedium());
-                        artist.setText(result.getArtist());
+                        artist.setText(result.getArtist().getUsername());
                         description.setText(result.getDescription());
 
-                        List<String> srcset = result.getSrcset();
+                        List<String> srcset = new ArrayList<>();
+
+                        srcset.add(result.getMainImageUrl());
+                        srcset.add(result.getImageUrl2());
+
                         for(int i =0; i < srcset.size(); i++) {
                             TextSliderView textSliderView = new TextSliderView(getApplicationContext());
                             textSliderView
@@ -80,7 +83,7 @@ public class PieceDetailActivity extends AppCompatActivity implements ViewPagerE
                     }
                 }).execute(json);
             }
-        }).execute("http://pieces.azurewebsites.net/api/data/" + selectedId);
+        }).execute(selectedUrl);
 
 
         slider.setPresetTransformer(SliderLayout.Transformer.Accordion);

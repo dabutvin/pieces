@@ -1,21 +1,13 @@
 package com.dabutvin.pieces;
 
-import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
-import android.view.MotionEvent;
-import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ArrayAdapter;
-import android.widget.ImageView;
+import android.view.View;
 
 import com.lorentzos.flingswipe.SwipeFlingAdapterView;
 
@@ -52,7 +44,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }).execute(json);
             }
-        }).execute("http://pieces.azurewebsites.net/api/data/");
+        }).execute("http://pieces.azurewebsites.net/pieces/");
 
         pieces = new ArrayList<>();
 
@@ -84,10 +76,18 @@ public class MainActivity extends AppCompatActivity {
 
                 if (readyToRefill) {
                     PieceModel newPiece = new PieceModel();
-                    newPiece.setArtist("the dev");
-                    newPiece.setMedium("java on pc");
-                    newPiece.setSrc("http://lorempixel.com/251/251/");
+
                     newPiece.setTitle("Debug infinity");
+                    newPiece.setMedium("java on pc");
+                    newPiece.setDescription("Describing something to you so you can read it......");
+                    newPiece.setMainImageUrl("http://lorempixel.com/251/251/");
+                    newPiece.setUrl("http://pieces.azurewebsites.net/pieces/1");
+
+                    ArtistModel newArtist = new ArtistModel();
+                    newArtist.setUsername("deebleezy");
+
+                    newPiece.setArtist(newArtist);
+
                     pieces.add(newPiece);
 
                     pieceAdapter.notifyDataSetChanged();
@@ -118,16 +118,22 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClicked(int i, Object o) {
                 Intent intent = new Intent(getApplicationContext(), PieceDetailActivity.class);
-                intent.putExtra("SELECTED_ID", ((PieceModel)o).getId());
+                intent.putExtra("URL", ((PieceModel)o).getUrl());
                 startActivity(intent);
             }
         });
 
         PieceModel newPiece = new PieceModel();
-        newPiece.setArtist("the dev");
+        newPiece.setTitle("Debug infinity");
         newPiece.setMedium("java on pc");
-        newPiece.setSrc("http://lorempixel.com/248/248/");
-        newPiece.setTitle("Initial piece");
+        newPiece.setDescription("Describing something to you so you can read it......");
+        newPiece.setMainImageUrl("http://lorempixel.com/251/251/");
+        newPiece.setUrl("http://pieces.azurewebsites.net/pieces/1");
+
+        ArtistModel newArtist = new ArtistModel();
+        newArtist.setUsername("The dev");
+
+        newPiece.setArtist(newArtist);
         pieces.add(newPiece);
         pieceAdapter.notifyDataSetChanged();
     }

@@ -35,9 +35,22 @@ public class DeserializePiecesTask extends AsyncTask<String, Void, List<PieceMod
 
                 piece.setId(jsonPieceObject.getInt("id"));
                 piece.setTitle(jsonPieceObject.getString("title"));
-                piece.setArtist(jsonPieceObject.getString("artist"));
                 piece.setMedium(jsonPieceObject.getString("medium"));
-                piece.setSrc(jsonPieceObject.getString("src"));
+                piece.setDescription(jsonPieceObject.getString("description"));
+                piece.setMainImageUrl(jsonPieceObject.getString("mainImageUrl"));
+                piece.setImageUrl2(jsonPieceObject.getString("imageUrl2"));
+                piece.setUrl(jsonPieceObject.getString("url"));
+
+                if (jsonPieceObject.has("artist")) {
+                    JSONObject jsonArtistObject = jsonPieceObject.getJSONObject("artist");
+                    ArtistModel artist = new ArtistModel();
+
+                    artist.setId(jsonArtistObject.getInt("id"));
+                    artist.setUsername(jsonArtistObject.getString("username"));
+                    artist.setUrl(jsonArtistObject.getString("url"));
+
+                    piece.setArtist(artist);
+                }
 
                 pieces.add(piece);
             }
